@@ -74,20 +74,64 @@ namespace VendingMachine
             Console.WriteLine("- добавить новый товар (N)");
             Console.WriteLine("- пополнить уже имеющиеся товары (R)");
             Console.WriteLine("- собрать выручку (T)");
+            Console.WriteLine("Если хотите выбрать другое действие, выйдите из режима администратора.");
             Console.WriteLine("Для того чтобы выйти из администраторского режима введите EXIT.");
         }
-        
+
+        static void RefillProducts(Administrator administrator)
+        {
+            Console.WriteLine("Введите название товара, который хотите пополнить и количество, которое хотитите добавить через пробел:");
+            string input = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine("Некорректные данные! Пожалуйста, повторите операцию с правильным вводом!");
+                return;
+            }
+            string name =  input.Split(' ')[0];
+            int quantity = int.Parse(input.Split(' ')[1]);
+            
+            if (machine.Products.ContainsKey(name))
+            {
+                administrator.RefillMachine(name, quantity);
+            }
+            else
+            {
+                Console.WriteLine("Несуществующий продукт! Пожалуйста, повторите операцию с правильным вводом!");
+                return;
+            }
+        }
+
+        static void AddProduct(Administrator administrator)
+        {
+            Console.WriteLine("Введите название товара, который хотите добавить, его цену и количество через пробел:");
+            string input = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine("Некорректные данные! Пожалуйста, повторите операцию с правильным вводом!");
+                return;
+            }
+            string name =  input.Split(' ')[0];
+            int price = int.Parse(input.Split(' ')[1]);
+            int quantity = int.Parse(input.Split(' ')[2]);
+            
+            administrator.AddNewProduct(name, price, quantity);
+            
+        }
         static void Administrate()
         {
+            var currentAdministrator = new Administrator(machine);
             ShowAdministratorMessage();
             string input = Console.ReadLine();
             while (input.ToUpperInvariant() != "EXIT")
             {
-                switch (input)
+                switch (input.ToUpperInvariant())
                 {
-                    case "N": break;   
-                    case "R": break;
-                    case "T": break;
+                    case "N": AddProduct(currentAdministrator); break;   
+                    case "R": RefillProducts(currentAdministrator); break;
+                    case "T": currentAdministrator.GetMoney(); break;
+                    default: 
+                        Console.WriteLine("Неизвестная операция!");
+                        break;
                 }
                 input = Console.ReadLine();
             }
@@ -112,6 +156,7 @@ namespace VendingMachine
                     case "P": machine.ShowProducts(); break;
                     case "M":
                         availableMoney = InsertCoins();
+                        Console.WriteLine($"Вам доступно {availableMoney}р");
                         break;
                     case "C": ChooseProduct(availableMoney); break;
                     case "A": Administrate(); break;
@@ -119,6 +164,9 @@ namespace VendingMachine
                         Console.WriteLine($"Ваши деньги: {availableMoney}р");
                         availableMoney = 0;
                         break; 
+                    default: 
+                        Console.WriteLine("Неизвестная операция!");
+                        break;
                 }
                 message = Console.ReadLine();
             }

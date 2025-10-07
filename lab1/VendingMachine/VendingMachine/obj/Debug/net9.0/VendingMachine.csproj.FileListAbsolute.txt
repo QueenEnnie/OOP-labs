@@ -12,3 +12,4 @@ C:\Users\user\RiderProjects\OOP-labs\lab1\VendingMachine\VendingMachine\obj\Debu
 C:\Users\user\RiderProjects\OOP-labs\lab1\VendingMachine\VendingMachine\obj\Debug\net9.0\VendingMachine.pdb
 C:\Users\user\RiderProjects\OOP-labs\lab1\VendingMachine\VendingMachine\obj\Debug\net9.0\VendingMachine.genruntimeconfig.cache
 C:\Users\user\RiderProjects\OOP-labs\lab1\VendingMachine\VendingMachine\obj\Debug\net9.0\ref\VendingMachine.dll
+C:\Users\user\RiderProjects\OOP-labs\lab1\VendingMachine\VendingMachine\obj\Debug\net9.0\VendingMachine.sourcelink.json
