@@ -1,0 +1,14 @@
+C:\Users\user\RiderProjects\OOP-labs\lab1\VendingMachine\VendingMachine\bin\Debug\net9.0\VendingMachine.exe
+C:\Users\user\RiderProjects\OOP-labs\lab1\VendingMachine\VendingMachine\bin\Debug\net9.0\VendingMachine.deps.json
+C:\Users\user\RiderProjects\OOP-labs\lab1\VendingMachine\VendingMachine\bin\Debug\net9.0\VendingMachine.runtimeconfig.json
+C:\Users\user\RiderProjects\OOP-labs\lab1\VendingMachine\VendingMachine\bin\Debug\net9.0\VendingMachine.dll
+C:\Users\user\RiderProjects\OOP-labs\lab1\VendingMachine\VendingMachine\bin\Debug\net9.0\VendingMachine.pdb
+C:\Users\user\RiderProjects\OOP-labs\lab1\VendingMachine\VendingMachine\obj\Debug\net9.0\VendingMachine.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\RiderProjects\OOP-labs\lab1\VendingMachine\VendingMachine\obj\Debug\net9.0\VendingMachine.AssemblyInfoInputs.cache
+C:\Users\user\RiderProjects\OOP-labs\lab1\VendingMachine\VendingMachine\obj\Debug\net9.0\VendingMachine.AssemblyInfo.cs
+C:\Users\user\RiderProjects\OOP-labs\lab1\VendingMachine\VendingMachine\obj\Debug\net9.0\VendingMachine.csproj.CoreCompileInputs.cache
+C:\Users\user\RiderProjects\OOP-labs\lab1\VendingMachine\VendingMachine\obj\Debug\net9.0\VendingMachine.dll
+C:\Users\user\RiderProjects\OOP-labs\lab1\VendingMachine\VendingMachine\obj\Debug\net9.0\refint\VendingMachine.dll
+C:\Users\user\RiderProjects\OOP-labs\lab1\VendingMachine\VendingMachine\obj\Debug\net9.0\VendingMachine.pdb
+C:\Users\user\RiderProjects\OOP-labs\lab1\VendingMachine\VendingMachine\obj\Debug\net9.0\VendingMachine.genruntimeconfig.cache
+C:\Users\user\RiderProjects\OOP-labs\lab1\VendingMachine\VendingMachine\obj\Debug\net9.0\ref\VendingMachine.dll
