@@ -79,43 +79,58 @@ namespace VendingMachine
         }
 
         static void RefillProducts(Administrator administrator)
-        {
-            Console.WriteLine("Введите название товара, который хотите пополнить и количество, которое хотитите добавить через пробел:");
-            string input = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(input))
+        { 
+            try
             {
-                Console.WriteLine("Некорректные данные! Пожалуйста, повторите операцию с правильным вводом!");
-                return;
+                Console.WriteLine("Введите название товара, который хотите пополнить и количество, которое хотитите добавить через пробел:");
+                string input = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    Console.WriteLine("Некорректные данные! Пожалуйста, повторите операцию с правильным вводом!");
+                    return;
+                }
+                string name =  input.Split(' ')[0];
+                int quantity = int.Parse(input.Split(' ')[1]);
+                
+                if (machine.Products.ContainsKey(name))
+                {
+                    administrator.RefillMachine(name, quantity);
+                }
+                else
+                {
+                    Console.WriteLine("Несуществующий продукт! Пожалуйста, повторите операцию с правильным вводом!");
+                    return;
+                }
             }
-            string name =  input.Split(' ')[0];
-            int quantity = int.Parse(input.Split(' ')[1]);
-            
-            if (machine.Products.ContainsKey(name))
+            catch (Exception ex)
             {
-                administrator.RefillMachine(name, quantity);
-            }
-            else
-            {
-                Console.WriteLine("Несуществующий продукт! Пожалуйста, повторите операцию с правильным вводом!");
-                return;
+                Console.WriteLine($"Произошла ошибка! Пожалуйства, повторите операцию, перечитав условия пользования!");
             }
         }
 
         static void AddProduct(Administrator administrator)
         {
-            Console.WriteLine("Введите название товара, который хотите добавить, его цену и количество через пробел:");
-            string input = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(input))
+            try
             {
-                Console.WriteLine("Некорректные данные! Пожалуйста, повторите операцию с правильным вводом!");
-                return;
+                Console.WriteLine(
+                    "Введите название товара, который хотите добавить, его цену и количество через пробел:");
+                string input = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    Console.WriteLine("Некорректные данные! Пожалуйста, повторите операцию с правильным вводом!");
+                    return;
+                }
+
+                string name = input.Split(' ')[0];
+                int price = int.Parse(input.Split(' ')[1]);
+                int quantity = int.Parse(input.Split(' ')[2]);
+
+                administrator.AddNewProduct(name, price, quantity);
             }
-            string name =  input.Split(' ')[0];
-            int price = int.Parse(input.Split(' ')[1]);
-            int quantity = int.Parse(input.Split(' ')[2]);
-            
-            administrator.AddNewProduct(name, price, quantity);
-            
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Произошла ошибка! Пожалуйства, повторите операцию, перечитав условия пользования!");
+            }
         }
         static void Administrate()
         {
