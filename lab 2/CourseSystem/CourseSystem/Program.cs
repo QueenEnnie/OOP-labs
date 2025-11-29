@@ -22,10 +22,14 @@ namespace CourseSystem
                         case "3":
                             GetAllCourses();
                             break;
+                        case "4":
+                            GetAllStudentsInCourse();
+                            break;
                         default: 
                             Console.WriteLine(ConsoleMessages.ManageCourseMenu.UnknownOperation);
                             break;
                     }
+                    Console.WriteLine(ConsoleMessages.ManageCourseMenu.AllMessage);
                     userChoice = Console.ReadLine();
                 }
             }
@@ -34,52 +38,102 @@ namespace CourseSystem
             {
                 string input = Console.ReadLine();
                 int id;
-                
                 while (!int.TryParse(input, out id))
                 {
-                    Console.WriteLine(ConsoleMessages.AddCourseMenu.IdMistake);
+                    Console.WriteLine(ConsoleMessages.ManageCourseMenu.IdMistake);
                     input = Console.ReadLine();
                 }  
                 return id;
             }
-            
-            static void AddCourse()
+
+            static int GetTeacherId()
             {
-                Console.WriteLine(ConsoleMessages.AddCourseMenu.IdInput);
-                
-                int courseId = GetId();
-                
-                Console.WriteLine(ConsoleMessages.AddCourseMenu.TitleInput);
+                int teacherId = GetId();
+                while (!_system.IsTeacherExisted(teacherId))
+                {
+                    Console.WriteLine(ConsoleMessages.ManageTeachersMenu.TeacherNotExisted);
+                    teacherId = GetId();
+                }
+                return teacherId;
+            }
+            
+            static string GetTitle()
+            {
+                Console.WriteLine(ConsoleMessages.ManageCourseMenu.TitleInput);
                 string courseTitle = Console.ReadLine();
                 while (string.IsNullOrWhiteSpace(courseTitle))
                 {
-                    Console.WriteLine(ConsoleMessages.AddCourseMenu.EmptyTitle);
+                    Console.WriteLine(ConsoleMessages.ManageCourseMenu.EmptyTitle);
                     courseTitle = Console.ReadLine();
                 }
-                
-                Console.WriteLine(ConsoleMessages.AddCourseMenu.TypeOfCourseChoice);
-                string courseType = Console.ReadLine();
+                return courseTitle;
+            }
 
+            static string GetCourseType()
+            {
+                Console.WriteLine(ConsoleMessages.ManageCourseMenu.TypeOfCourseChoice);
+                string courseType = Console.ReadLine();
                 while (!(courseType == "1" || courseType == "2"))
                 {
-                    Console.WriteLine(ConsoleMessages.AddCourseMenu.IncorrectTypeChoice);
+                    Console.WriteLine(ConsoleMessages.ManageCourseMenu.IncorrectTypeChoice);
                     courseType = Console.ReadLine();
                 }
+                return courseType;
+            }
+            
+            static void AddCourse()
+            {
+                Console.WriteLine(ConsoleMessages.ManageCourseMenu.IdInput);
+                
+                int courseId = GetId();
+                while (_system.IsCourseExisted(courseId))
+                {
+                    Console.WriteLine(ConsoleMessages.ManageCourseMenu.IdAlreadyExisting);
+                    courseId = GetId();
+                }
+                string courseTitle = GetTitle();
+                string courseType = GetCourseType();
+                List<Student> emptyStudents = new List<Student>();
 
-                _system.AddCourse(courseId, courseTitle, courseType);
+                _system.AddCourse(courseId, courseTitle, courseType, emptyStudents);
+                Console.WriteLine(ConsoleMessages.ManageCourseMenu.SuccessfulCreation);
             }
 
             static void RemoveCourse()
             {
-                Console.WriteLine(ConsoleMessages.RemoveCourseMenu.IdInput);
+                Console.WriteLine(ConsoleMessages.ManageCourseMenu.IdInputToDelete);
                 int courseId = GetId();
+                while (!_system.IsCourseExisted(courseId))
+                {
+                    Console.WriteLine(ConsoleMessages.ManageCourseMenu.CourseNotExisted);
+                    courseId = GetId();
+                }
                 _system.DeleteCourse(courseId);
+                Console.WriteLine(ConsoleMessages.ManageCourseMenu.SuccessfulDeletion);
             }
 
             static void GetAllCourses()
             {
-                Console.WriteLine(ConsoleMessages.GetCourseMenu.AllCourses);
-                _system.GetAllCourses();
+                Console.WriteLine(ConsoleMessages.ManageCourseMenu.AllCourses);
+                foreach (string text in _system.GetAllCourses())
+                {
+                    Console.WriteLine(text);
+                }
+            }
+
+            static void GetAllStudentsInCourse()
+            {
+                Console.WriteLine(ConsoleMessages.ManageCourseMenu.IdCourseToGetStudents);
+                int courseId = GetId();
+                while (!_system.IsCourseExisted(courseId))
+                {
+                    Console.WriteLine(ConsoleMessages.ManageCourseMenu.CourseNotExisted);
+                    courseId = GetId();
+                }
+                foreach (string text in _system.GetAllStudentsInCourse(courseId))
+                {
+                    Console.WriteLine(text);
+                }
             }
             static void ManageTeachers()
             {
@@ -99,6 +153,7 @@ namespace CourseSystem
                             Console.WriteLine(ConsoleMessages.ManageCourseMenu.UnknownOperation);
                             break;
                     }
+                    Console.WriteLine(ConsoleMessages.ManageTeachersMenu.AllMessage);
                     userChoice = Console.ReadLine();
                 }   
             }
@@ -107,20 +162,32 @@ namespace CourseSystem
             {
                 Console.WriteLine(ConsoleMessages.ManageTeachersMenu.IdCourseInput);
                 int courseId = GetId();
+                while (!_system.IsCourseExisted(courseId))
+                {
+                    Console.WriteLine(ConsoleMessages.ManageCourseMenu.CourseNotExisted);
+                    courseId = GetId();
+                }
                 
                 Console.WriteLine(ConsoleMessages.ManageTeachersMenu.ListOfTeachers);
-                Console.WriteLine(ConsoleMessages.ManageTeachersMenu.Teachers);
+                foreach (string text in _system.GetAllTeachers())
+                {
+                    Console.WriteLine(text);
+                }
                 Console.WriteLine(ConsoleMessages.ManageTeachersMenu.IdTeacherInput);
-                
-                int teacherId = GetId();
+
+                int teacherId = GetTeacherId();
                 _system.AppointTeacher(teacherId, courseId);
+                Console.WriteLine(ConsoleMessages.ManageTeachersMenu.SuccessfulAppointment);
             }
 
             static void GetAlLCoursesByOneTeacher()
             {
                 Console.WriteLine(ConsoleMessages.ManageTeachersMenu.IdTeacherInputToGetCourse);
-                int teacherId = GetId();
-                _system.GetAllTeacherCourses(teacherId);
+                int teacherId = GetTeacherId();
+                foreach (string text in _system.GetAllTeacherCourses(teacherId))
+                {
+                    Console.WriteLine(text);
+                }
             }
 
             static void FillTheSystem()
@@ -135,8 +202,8 @@ namespace CourseSystem
                 };
                 _system.AddTeacher(123, "Alice");
                 _system.AddTeacher(124, "Alexander");
-                _system.AddCourse(13, "maths", "2");
-                _system.AddCourse(24, "english", "2");
+                _system.AddCourse(13, "maths", "2", students);
+                _system.AddCourse(24, "english", "2", students);
                 
             }
             static void Main(string[] args)
@@ -158,6 +225,7 @@ namespace CourseSystem
                             Console.WriteLine(ConsoleMessages.MainMenu.UnknownOperation);
                             break;
                     }
+                    Console.WriteLine(ConsoleMessages.MainMenu.AllMessage);
                     userChoice = Console.ReadLine();
                 }
 

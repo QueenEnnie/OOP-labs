@@ -13,21 +13,18 @@ public class ManagementSystem
         _teachers = new Dictionary<int, Teacher>();
     }
     
-    public void AddCourse(int courseId, string courseTitle, string courseType, )
+    public void AddCourse(int courseId, string courseTitle, string courseType, List<Student> students)
     {
         Course course = null;
         if (courseType == "1")
         {
-            course = new OnlineCourse(courseId, courseTitle);
+            course = new OnlineCourse(courseId, courseTitle, students);
         }
         else if (courseType == "2")
         {
-            course = new OfflineCourse(courseId, courseTitle);
+            course = new OfflineCourse(courseId, courseTitle, students);
         }
         _courses.Add(courseId, course);
-        string courseTypeWords = (courseType == "1") ? "Онлайн" : "Оффлайн";
-        Console.WriteLine($"{courseTypeWords} курс с id {course.CourseID} и названием {courseTitle} " +
-                          $"был успешно создан!");
     }
 
     public void AddTeacher(int teacherId, string teacherName)
@@ -39,16 +36,17 @@ public class ManagementSystem
     public void DeleteCourse(int courseId)
     {
         _courses.Remove(courseId);
-        Console.WriteLine($"Курс с id {courseId} был удален!");
     }
 
-    public void GetAllCourses()
+    public List<String> GetAllCourses()
     {
+        List<string> coursesInformation = new List<string>();
         foreach (KeyValuePair<int, Course> course in _courses)
         {
-            // change when description and teachers will be added - to print them and type of the course
-            Console.WriteLine($"\"{course.Value.CourseTitle}\" (id {course.Key})");
+
+            coursesInformation.Add($"\"{course.Value.CourseTitle}\" (id {course.Key}) {course.Value.CourseType}");
         }
+        return coursesInformation;
     }
 
     public void AppointTeacher(int teacherId, int courseId)
@@ -58,13 +56,43 @@ public class ManagementSystem
         
     }
 
-    public void GetAllTeacherCourses(int teacherId)
+    public List<string> GetAllTeacherCourses(int teacherId)
     {
+        List<string> coursesInformationForTeacher = new List<string>();
         foreach (Course course in _teachers[teacherId].Courses)
         {
-            Console.WriteLine(course);
+            coursesInformationForTeacher.Add($"\"{course.CourseTitle}\" (id {course.CourseId}) {course.CourseType}");
         }
-        
+        return coursesInformationForTeacher;
     }
-    
+
+    public List<String> GetAllStudentsInCourse(int courseId)
+    {
+        List<string> studentsInformation = new List<string>();
+        foreach (Student student in _courses[courseId].Students)
+        {
+            studentsInformation.Add($"{student.Name} (id {student.Id})");
+        }
+        return studentsInformation;
+    }
+
+    public List<String> GetAllTeachers()
+    {
+        List<string> teachersInformation = new List<string>();
+        foreach (Teacher teacher in  _teachers.Values)
+        {
+            teachersInformation.Add($"{teacher.Name} (id {teacher.Id})");
+        }
+        return teachersInformation;
+    }
+
+    public bool IsCourseExisted(int courseId)
+    {
+        return _courses.ContainsKey(courseId);
+    }
+
+    public bool IsTeacherExisted(int teacherId)
+    {
+        return _teachers.ContainsKey(teacherId);
+    }
 }

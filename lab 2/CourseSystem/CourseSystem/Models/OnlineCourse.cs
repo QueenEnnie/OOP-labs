@@ -2,16 +2,18 @@
 
 public class OnlineCourse : Course
 {
-    public OnlineCourse(int courseId,  string courseTitle)
+    public OnlineCourse(int courseId,  string courseTitle, List<Student> students)
     {
-        CourseID = courseId;
+        CourseId = courseId;
         CourseTitle = courseTitle;
-        Students = new List<Student>();
+        Students = students;
+        CourseType = "онлайн";
     }
 
-    public int CourseID { get; }
+    public int CourseId { get; }
     public string CourseTitle { get; }
     public int TeacherId { get; set; }
+    public string CourseType { get; }
     public List<Student> Students { get; }
 
     public void AppointTeacher(int teacherId)
@@ -22,7 +24,7 @@ public class OnlineCourse : Course
 
     public override string ToString()
     {
-        return $"{CourseTitle} - {CourseID}";
+        return $"{CourseTitle} - {CourseId}";
     }
     
 }
