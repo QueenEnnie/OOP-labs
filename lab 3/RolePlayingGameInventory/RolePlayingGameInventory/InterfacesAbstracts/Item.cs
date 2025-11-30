@@ -5,4 +5,5 @@ public interface Item
     string Name { get; }
     int Level { get; }
     int Weight { get; }
+    void LevelUp();
 }

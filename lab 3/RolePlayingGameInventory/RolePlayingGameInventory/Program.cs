@@ -11,7 +11,8 @@ namespace RolePlayingGameInventory
         {
             Potion potion = new HealthPotion("UsefulPotion", 1, 10);
             ItemFactory itemFactory = new BaseItemFactory();
-            Player player = new Player("mickie mouse", itemFactory);
+            EquipmentService equipmentService = new EquipmentService();
+            Player player = new Player("mickie mouse", itemFactory, equipmentService);
             player.EquipInitially();
             player.UsePotion(potion);
 

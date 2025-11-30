@@ -13,5 +13,10 @@ public class GunWeapon : Interfaces.Weapon
         get => _weight;
         set {} 
     }
-    
+    public override void LevelUp()
+    {
+        _weight++;
+        Level++;
+        Damage += 5;
+    }
 }

@@ -5,8 +5,12 @@ namespace RolePlayingGameInventory.Interfaces;
 public abstract class Potion : Item
 {
     public string Name { get; }
-    public int Level { get; }
+    public int Level { get; set; }
     public int Weight { get; protected set; } = 0;
+    public virtual void LevelUp()
+    {
+    }
+
     protected Potion(string name, int level)
     {
         Name = name;

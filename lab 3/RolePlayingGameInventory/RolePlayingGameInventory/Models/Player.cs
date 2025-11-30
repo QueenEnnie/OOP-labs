@@ -10,12 +10,15 @@ public class Player
     public int Speed { get; set; } = 30;
     public Inventory Inventory { get; }
     private ItemFactory _itemFactory;
+    private EquipmentService _equipmentService;
 
-    public Player(string name, ItemFactory itemFactory)
+    public Player(string name, ItemFactory itemFactory, EquipmentService equipmentService)
     {
         Name = name;
         _itemFactory = itemFactory;
+        _equipmentService = equipmentService;
         Inventory = new Inventory();
+        
     }
     
     public void EquipInitially()
@@ -25,6 +28,8 @@ public class Player
 
         Inventory.AddItem(weapon);
         Inventory.AddItem(armor);
+        _equipmentService.Equip(this, weapon);
+        _equipmentService.Equip(this, armor);
     }
 
     public void UsePotion(Interfaces.Potion potion)
@@ -38,5 +43,10 @@ public class Player
     public void GetInventoryInfo()
     {
         Inventory.GetInformation();
+    }
+
+    public void LevelUp()
+    {
+        Inventory.LevelUp();
     }
 }

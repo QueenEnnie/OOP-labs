@@ -29,4 +29,11 @@ public class BombWeapon : Interfaces.Weapon
             }
         } 
     }
+
+    public override void LevelUp()
+    {
+        _weight++;
+        Level++;
+        Damage += 10;
+    }
 }

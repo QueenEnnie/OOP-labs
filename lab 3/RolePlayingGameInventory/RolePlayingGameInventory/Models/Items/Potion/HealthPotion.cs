@@ -2,7 +2,7 @@
 
 public class HealthPotion : Interfaces.Potion
 {
-    public int Health { get; }
+    public int Health { get; set; }
 
     public HealthPotion(string name, int level, int health) : base(name, level)
     {
@@ -29,6 +29,12 @@ public class HealthPotion : Interfaces.Potion
         }
 
         return true;
+    }
+
+    public override void LevelUp()
+    {
+        Level++;
+        Health = (int)(Health + Level * 1.2);
     }
 }
 

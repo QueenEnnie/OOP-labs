@@ -2,7 +2,7 @@
 
 public class SpeedPotion : Interfaces.Potion
 {
-    public int IncreasingSpeed { get; }
+    public int IncreasingSpeed { get; set; }
 
     public SpeedPotion(string name, int level, int speed) : base(name, level)
     {
@@ -13,5 +13,10 @@ public class SpeedPotion : Interfaces.Potion
     {
         player.Speed += IncreasingSpeed;
         return true;
+    }
+    public override void LevelUp()
+    {
+        Level++;
+        IncreasingSpeed = (int)(IncreasingSpeed + Level * 1.3);
     }
 }

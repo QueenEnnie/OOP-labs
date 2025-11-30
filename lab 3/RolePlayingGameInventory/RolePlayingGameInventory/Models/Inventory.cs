@@ -44,6 +44,15 @@ public class Inventory
             _otherItems.Remove(item);
         }
     }
+
+    public void LevelUp()
+    {
+        foreach (var item in _otherItems)
+        {
+            item.LevelUp();
+        }
+            
+    }
     public void GetInformation()
     {
         Console.WriteLine("QuestItems:");

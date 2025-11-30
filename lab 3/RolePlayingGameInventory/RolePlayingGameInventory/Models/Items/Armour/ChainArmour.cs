@@ -19,4 +19,10 @@ public class ChainArmour: Interfaces.Armour
         get => _weight;
         set {} 
     }
+
+    public override void LevelUp()
+    {
+        Defense += 10;
+        Level++;
+    }
 }

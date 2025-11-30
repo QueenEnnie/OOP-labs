@@ -19,4 +19,9 @@ public class MetalArmour: Interfaces.Armour
         get => _weight;
         set {} 
     }
+    public override void LevelUp()
+    {
+        Defense += 5;
+        Level++;
+    }
 }

@@ -19,4 +19,9 @@ public class MagicArmour: Interfaces.Armour
         get => _weight;
         set {} 
     }
+    public override void LevelUp()
+    {
+        Defense += 50;
+        Level++;
+    }
 }

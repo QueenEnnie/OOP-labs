@@ -8,7 +8,12 @@ public class QuestItem : Item
     public string Name { get; }
     public int Level { get; }
     public int Weight { get; private set; } = 0;
-    public string Description { get; }
+    public void LevelUp()
+    {
+        Description += "*";
+    }
+
+    public string Description { get; set; }
 
     public QuestItem(string id, string name, string description)
     {
