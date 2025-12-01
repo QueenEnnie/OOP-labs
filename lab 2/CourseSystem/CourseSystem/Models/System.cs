@@ -1,6 +1,4 @@
-﻿using CourseSystem.Models;
-
-namespace CourseSystem.Models;
+﻿namespace CourseSystem.Models;
 
 public class ManagementSystem
 {
@@ -53,7 +51,6 @@ public class ManagementSystem
     {
         _courses[courseId].AppointTeacher(teacherId);
         _teachers[teacherId].AddToCourse(_courses[courseId]);
-        
     }
 
     public List<string> GetAllTeacherCourses(int teacherId)

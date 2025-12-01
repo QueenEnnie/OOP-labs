@@ -4,7 +4,7 @@ public interface Course
 {
     int CourseId {get;}
     string CourseTitle {get;}
-    int TeacherId {get;}
+    int TeacherId {get; set; }
     string CourseType {get;}
     List<Student> Students { get; }
     void AppointTeacher(int teacherId);

@@ -51,7 +51,11 @@ public class Inventory
         {
             item.LevelUp();
         }
-            
+    }
+
+    public void IncreaseWeight(int amount)
+    {
+        _currentWeight += amount;
     }
     public void GetInformation()
     {

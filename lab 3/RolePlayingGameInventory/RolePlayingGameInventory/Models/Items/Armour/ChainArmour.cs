@@ -25,4 +25,9 @@ public class ChainArmour: Interfaces.Armour
         Defense += 10;
         Level++;
     }
+    public override void PutOn(Player player)
+    {
+        player.Speed -= _speed;
+        player.IncreaseWeight(_weight);
+    }
 }

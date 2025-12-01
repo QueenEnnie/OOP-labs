@@ -49,4 +49,9 @@ public class Player
     {
         Inventory.LevelUp();
     }
+
+    public void IncreaseWeight(int amount)
+    {
+        Inventory.IncreaseWeight(amount);
+    }
 }

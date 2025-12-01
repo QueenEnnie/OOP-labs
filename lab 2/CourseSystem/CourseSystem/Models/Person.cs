@@ -2,6 +2,6 @@
 
 public interface Person
 {
-    int Id { get; }
-    string Name { get; }
+    int Id { get; set; }
+    string Name { get; set; }
 }
