@@ -1,69 +1,72 @@
 ﻿using RolePlayingGameInventory.Interfaces;
+using RolePlayingGameInventory.Interfaces.Items;
+using RolePlayingGameInventory.Interfaces.Visitors;
+using RolePlayingGameInventory.Models.Items;
 
 namespace RolePlayingGameInventory.Models;
 
-public class Inventory
+public class Inventory: IInventoryAddingVisitor, IInventoryRemovingVisitor
 {
     private List<QuestItem> _questItems;
-    private List<Item>  _otherItems;
+    private List<IItem>  _otherItems;
     private int _maxWeight { get; set; } = 100;
     private int _currentWeight { get; set; } = 0;
 
     public Inventory()
     {
         _questItems = new List<QuestItem>();
-        _otherItems = new List<Item>();
-    }
-
-    public void AddItem(Item item)
-    {
-        if (_currentWeight + item.Weight > _maxWeight)
-        {
-            Console.WriteLine("You are already too heavy to add another item");
-        }
-        else
-        {
-            _otherItems.Add(item);
-            _currentWeight += item.Weight;
-        }
-    }
-
-    public void AddQuestItem(QuestItem questItem)
-    {
-        _questItems.Add(questItem);
-    }
-
-    public void RemoveItem(Item item)
-    {
-        if (item is QuestItem questItem)
-        {
-            _questItems.Remove(questItem);
-        }
-        else
-        {
-            _otherItems.Remove(item);
-        }
+        _otherItems = new List<IItem>();
     }
 
     public void LevelUp()
     {
         foreach (var item in _otherItems)
         {
-            item.LevelUp();
+            var itemToLevelUp = (ICanLevelUp)item;
+            itemToLevelUp.LevelUp();
+        }
+    }
+    
+    public InventoryInformation GetInformation()
+    {
+        return new InventoryInformation(
+            questItems: _questItems,
+            otherItems: _otherItems,
+            currentWeight: _currentWeight,
+            maxWeight: _maxWeight
+        );
+    }
+
+    public bool ContainsEquipableItem(IItem item)
+    {
+        return _otherItems.Contains(item);
+        
+    }
+    public void VisitAdd(QuestItem item)
+    {
+        _questItems.Add(item);
+    }
+
+    public void VisitAdd(ICanLevelUp item)
+    {
+        if (_currentWeight + item.Weight <= _maxWeight)
+        {
+            _otherItems.Add(item);
+            _currentWeight += item.Weight;
         }
     }
 
-    public void IncreaseWeight(int amount)
+    public void VisitRemove(QuestItem item)
     {
-        _currentWeight += amount;
+        _questItems.Remove(item);
     }
-    public void GetInformation()
+
+    public void VisitRemove(ICanLevelUp item)
     {
-        Console.WriteLine("QuestItems:");
-        foreach (var questItem in _questItems)
+        if (_otherItems.Contains(item))
         {
-            Console.WriteLine($"- {questItem.Name} - {questItem.Description}");
+            _otherItems.Remove(item);
+            _currentWeight -= item.Weight;
         }
-        Console.WriteLine("Other items:");
     }
 }

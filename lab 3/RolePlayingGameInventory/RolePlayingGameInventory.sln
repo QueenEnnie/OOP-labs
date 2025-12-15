@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RolePlayingGameInventory", "RolePlayingGameInventory\RolePlayingGameInventory.csproj", "{72ED2B08-986A-4433-B5AF-A0FA884F5596}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{492A7291-4405-4161-8A2E-1B70DA1F0A24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{72ED2B08-986A-4433-B5AF-A0FA884F5596}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72ED2B08-986A-4433-B5AF-A0FA884F5596}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72ED2B08-986A-4433-B5AF-A0FA884F5596}.Release|Any CPU.Build.0 = Release|Any CPU
+		{492A7291-4405-4161-8A2E-1B70DA1F0A24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{492A7291-4405-4161-8A2E-1B70DA1F0A24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{492A7291-4405-4161-8A2E-1B70DA1F0A24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{492A7291-4405-4161-8A2E-1B70DA1F0A24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

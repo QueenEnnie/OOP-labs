@@ -1,57 +1,46 @@
-﻿using RolePlayingGameInventory.Interfaces;
-
-namespace RolePlayingGameInventory.Models;
+﻿namespace RolePlayingGameInventory.Models;
 
 public class Player
 {
     public string Name { get; }
-    public int Health { get; set; } = 500;
+    public int Health { get; private set; } = 500;
     public int MaxHealth { get; private set; } = 500;
-    public int Speed { get; set; } = 30;
+    public int Speed { get; private set; } = 30;
+    public int OwnWeight { get; private set; } = 10;
+    
     public Inventory Inventory { get; }
-    private ItemFactory _itemFactory;
-    private EquipmentService _equipmentService;
-
-    public Player(string name, ItemFactory itemFactory, EquipmentService equipmentService)
+    
+    public Player(string name)
     {
         Name = name;
-        _itemFactory = itemFactory;
-        _equipmentService = equipmentService;
         Inventory = new Inventory();
-        
-    }
-    
-    public void EquipInitially()
-    {
-        var weapon = _itemFactory.CreateWeapon();
-        var armor = _itemFactory.CreateArmor();
-
-        Inventory.AddItem(weapon);
-        Inventory.AddItem(armor);
-        _equipmentService.Equip(this, weapon);
-        _equipmentService.Equip(this, armor);
-    }
-
-    public void UsePotion(Interfaces.Potion potion)
-    {
-        if (potion.Use(this))
-        {
-            Inventory.RemoveItem(potion);
-        }
-    }
-
-    public void GetInventoryInfo()
-    {
-        Inventory.GetInformation();
     }
 
     public void LevelUp()
     {
         Inventory.LevelUp();
+        MaxHealth += 10;
+        Health += 10;
     }
 
+    public void IncreaseHealth(int amount)
+    {
+        Health += amount;
+    }
+    
+    public void IncreaseSpeed(int amount)
+    {
+        Speed += amount;
+    }
+    
     public void IncreaseWeight(int amount)
     {
-        Inventory.IncreaseWeight(amount);
+        OwnWeight += amount;
+    }
+
+
+    public override string ToString()
+    {
+        return $"{Name} - {Health}/{MaxHealth} Health - {Speed} Speed - {OwnWeight} Weight";
     }
 }

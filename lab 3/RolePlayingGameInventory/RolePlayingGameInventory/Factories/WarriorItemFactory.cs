@@ -1,22 +1,19 @@
-﻿using RolePlayingGameInventory.Interfaces;
-using RolePlayingGameInventory.Models.Armour;
-using RolePlayingGameInventory.Models.Weapon;
+﻿using RolePlayingGameInventory.Interfaces.Factories;
+using RolePlayingGameInventory.Interfaces.Items;
+using RolePlayingGameInventory.Models.Items.Armour;
+using RolePlayingGameInventory.Models.Items.Weapon;
 
 namespace RolePlayingGameInventory.Factories;
 
-public class WarriorItemFactory : ItemFactory
+public class WarriorItemFactory : IWeaponArmorItemFactory
 {
-    public Weapon CreateWeapon(int level = 1)
+    public IWeapon CreateWeapon(int level = 1)
     {
-        string name = "Bomb";
-        int damage = 5 + level * 40;
-        return new BombWeapon(name, level, damage);
+        return new BombWeapon("Bomb", level, 5 + level * 40, "cool bomb");
     }
 
-    public Armour CreateArmor(int level = 1)
+    public IArmour CreateArmor(int level = 1)
     {
-        string name = "Chain Armour";
-        int defense = 30 + level * 2;
-        return new ChainArmour(name, level, defense);
+        return new ChainArmour("Chain Armour", level, 30 + level * 2, "cool chain armour");
     }
 }

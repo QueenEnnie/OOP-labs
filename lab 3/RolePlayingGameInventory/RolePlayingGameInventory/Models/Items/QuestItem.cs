@@ -1,29 +1,17 @@
-﻿using RolePlayingGameInventory.Interfaces;
+﻿using RolePlayingGameInventory.Interfaces.Items;
 
-namespace RolePlayingGameInventory.Models;
+namespace RolePlayingGameInventory.Models.Items;
 
-public class QuestItem : Item
+public class QuestItem : IItem
 {
-    public string Id { get; }
     public string Name { get; }
-    public int Level { get; }
-    public int Weight { get; private set; } = 0;
-    public void LevelUp()
-    {
-        Description += "*";
-    }
+    public int Weight { get; } = 0;
 
-    public string Description { get; set; }
+    public string Description { get; }
 
-    public QuestItem(string id, string name, string description)
+    public QuestItem(string name, string description)
     {
-        Id = id;
         Name = name;
         Description = description;
-    }
-
-    public override string ToString()
-    {
-        return $"{Name}: {Description}";
     }
 }

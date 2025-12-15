@@ -1,22 +1,33 @@
-﻿namespace RolePlayingGameInventory.Models.Potion;
+﻿using RolePlayingGameInventory.Interfaces.Items;
 
-public class SpeedPotion : Interfaces.Potion
+namespace RolePlayingGameInventory.Models.Items.Potion
 {
-    public int IncreasingSpeed { get; set; }
+    public class SpeedPotion : IPotion
+    {
+        private int IncreasingSpeed { get; set; }
+        public string Name { get; }
+        public int Weight { get; } = 0;
+        public string Description { get; }
+        public int Level { get; private set; }
 
-    public SpeedPotion(string name, int level, int speed) : base(name, level)
-    {
-        IncreasingSpeed = speed;
-    }
+        public SpeedPotion(string name, int level, int speed, string description)
+        {
+            IncreasingSpeed = speed;
+            Name = name;
+            Level = level;
+            Description = description;
+        }
 
-    public override bool Use(Player player)
-    {
-        player.Speed += IncreasingSpeed;
-        return true;
-    }
-    public override void LevelUp()
-    {
-        Level++;
-        IncreasingSpeed = (int)(IncreasingSpeed + Level * 1.3);
+        public bool Use(Player player)
+        {
+            player.IncreaseSpeed(IncreasingSpeed);
+            return true;
+        }
+
+        public void LevelUp()
+        {
+            Level++;
+            IncreasingSpeed = (int)(IncreasingSpeed + Level * 1.3);
+        }
     }
 }

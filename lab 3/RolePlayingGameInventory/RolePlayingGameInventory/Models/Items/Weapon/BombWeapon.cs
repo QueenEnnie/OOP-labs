@@ -1,39 +1,56 @@
-﻿namespace RolePlayingGameInventory.Models.Weapon;
+﻿using RolePlayingGameInventory.Interfaces.Items;
 
-public class BombWeapon : Interfaces.Weapon
+namespace RolePlayingGameInventory.Models.Items.Weapon;
+
+public class BombWeapon : IWeapon
 
 {
-    private int _weight = 50;
-    private int _minDamage = 100;
+    public int Weight { get; private set; } = 50;
+    private readonly int _minDamage = 100;
     private int _settledDamage;
+    public bool IsEquipped { get; set; } = false;
+    
 
-    public BombWeapon(string name, int level, int damage) : base(name, level, damage)
+    public BombWeapon(string name, int level, int damage, string description)
     {
         _settledDamage = damage;
+        Description = description;
+        Name = name;
+        Level =  level;
     }
-    public override int Weight
-    { 
-        get => _weight;
-        set {} 
-    }
-    
-    public override int Damage 
-    { 
-        get => Math.Max(_settledDamage, _minDamage);
-        set 
-        { 
+
+    public string Name { get; }
+
+    public string Description { get; }
+    public int Damage
+    {
+        get => _settledDamage;
+        set
+        {
             _settledDamage = value;
             if (_settledDamage < _minDamage)
             {
                 _settledDamage = _minDamage;
             }
-        } 
+        }
     }
+    public int Level { get; private set; }
 
-    public override void LevelUp()
+    public void LevelUp()
     {
-        _weight++;
+        Weight++;
         Level++;
         Damage += 10;
     }
+
+    public void Equip(Player player)
+    {
+        player.IncreaseWeight(Weight);
+    }
+
+    public void Unequip(Player player)
+    {
+        player.IncreaseWeight(-Weight);
+    }
+
 }

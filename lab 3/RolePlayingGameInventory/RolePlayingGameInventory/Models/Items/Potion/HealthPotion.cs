@@ -1,37 +1,45 @@
-﻿namespace RolePlayingGameInventory.Models.Potion;
+﻿using RolePlayingGameInventory.Interfaces.Items;
 
-public class HealthPotion : Interfaces.Potion
+namespace RolePlayingGameInventory.Models.Items.Potion;
+
+public class HealthPotion : IPotion
 {
-    public int Health { get; set; }
+    private int Health { get; set; }
+    public string Name { get; }
+    public int Weight { get; } = 0;
+    public string Description { get; }
+    public int Level { get; private set; }
 
-    public HealthPotion(string name, int level, int health) : base(name, level)
+    public HealthPotion(string name, int level, int health, string description)
     {
         Health = health;
+        Name = name;
+        Weight = level;
+        Description = description;
     }
 
-    public override bool Use(Player player)
+    public bool Use(Player player)
     {
         if (player.Health < player.MaxHealth)
         {
             if (player.Health + Health > player.MaxHealth)
             {
-                player.Health += (player.MaxHealth - player.Health);
+                player.IncreaseHealth((player.MaxHealth - player.Health));
             }
             else
             {
-                player.Health += Health;
+                player.IncreaseHealth(Health);
             }
         }
         else
         {
-            Console.WriteLine("No need to use potion - you are perfectly healthy");
             return false;
         }
 
         return true;
     }
 
-    public override void LevelUp()
+    public void LevelUp()
     {
         Level++;
         Health = (int)(Health + Level * 1.2);

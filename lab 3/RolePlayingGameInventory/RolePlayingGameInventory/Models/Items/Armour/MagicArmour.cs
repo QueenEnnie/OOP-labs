@@ -1,27 +1,40 @@
-﻿namespace RolePlayingGameInventory.Models.Armour;
+﻿using RolePlayingGameInventory.Interfaces.Items;
 
-public class MagicArmour: Interfaces.Armour
+namespace RolePlayingGameInventory.Models.Items.Armour;
+
+public class MagicArmour: IArmour
 {
-    private int _speed = 5;
-    private int _weight = 20;
+    public int Weight { get; } = 20;
+    public int Speed { get; set; } = 15;
+    public int Defense { get; set; }
+    public string Name { get; }
+    public string Description { get; }
+    public int Level { get; private set; }
+    public bool IsEquipped { get; set; } = false;
+    
 
-    public MagicArmour(string id, string name, int level, int defense) : base(name, level, defense)
+    public MagicArmour(string name, int level, int defense, string description)
     {
+        Name = name;
+        Level = level;
+        Defense = defense;
+        Description = description;
     }
 
-    public override int Speed 
-    { 
-        get => _speed;
-        set {} 
-    }
-    public override int Weight
-    { 
-        get => _weight;
-        set {} 
-    }
-    public override void LevelUp()
+    public void LevelUp()
     {
         Defense += 50;
         Level++;
+    }
+    public void Equip(Player player)
+    {
+        player.IncreaseSpeed(Speed);
+        player.IncreaseWeight(Weight);
+    }
+    
+    public void Unequip(Player player)
+    {
+        player.IncreaseSpeed(-Speed);
+        player.IncreaseWeight(-Weight);
     }
 }
