@@ -21,9 +21,6 @@ namespace RolePlayingGameInventory
             PlayerArmourWeaponService playerArmourWeaponService = new PlayerArmourWeaponService(itemFactory, equipmentService);
             playerArmourWeaponService.EquipInitially(player);
             
-            
-            // player.EquipInitially();
-            // player.UsePotion(potion);
             Inventory currentInventory = player.Inventory;
             currentInventory.VisitAdd(key);
             InformationDisplay informationDisplay = new InformationDisplay(currentInventory.GetInformation());

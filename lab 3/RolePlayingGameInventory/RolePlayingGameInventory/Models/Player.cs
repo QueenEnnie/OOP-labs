@@ -37,8 +37,7 @@ public class Player
     {
         OwnWeight += amount;
     }
-
-
+    
     public override string ToString()
     {
         return $"{Name} - {Health}/{MaxHealth} Health - {Speed} Speed - {OwnWeight} Weight";
