@@ -1,6 +1,6 @@
 ﻿namespace OrderSystem.Interfaces;
 
-public class IObserver
+public interface IObserver
 {
-    
+    void Update(string message);
 }
