@@ -4,7 +4,7 @@ namespace OrderSystem.Decorators;
 
 public abstract class DishDecorator: IDish
 {
-    protected readonly IDish Dish;
+    protected IDish Dish;
 
     protected DishDecorator(IDish dish)
     {

@@ -10,16 +10,16 @@ public class ThickDough: DishDecorator
 
     public override string GetName()
     {
-        return Dish.GetName() + "on thick dough";
+        return Dish.GetName() + " on thick dough";
     }
     
     public override string GetDescription()
     {
-        return Dish.GetDescription() + "super tender";
+        return Dish.GetDescription() + " super tender";
     }
 
     public override decimal GetPrice()
     {
-        return base.GetPrice() * (decimal)1.5;
+        return Dish.GetPrice() * (decimal)1.5;
     }
 }

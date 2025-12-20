@@ -8,8 +8,8 @@ public class Order
 {
     public IOrderState OrderState;
     private ICostStrategy _costStrategy;
-    public List<IDish> Dishes { get; set; }
-    public int OrderNumber { get; set; }
+    public List<IDish> Dishes { get; }
+    public int OrderNumber { get; }
     public bool IsFinished { get; set; } = false;
     private readonly List<IObserver> _observers;
     public Order(List<IDish> dishes, int orderNumber)

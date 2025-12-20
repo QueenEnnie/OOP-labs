@@ -10,12 +10,12 @@ public class ExtraSpicy: DishDecorator
 
     public override string GetName()
     {
-        return base.GetName() + "spicy";
+        return Dish.GetName() + " spicy";
     }
 
     public override string GetDescription()
     {
-        return Dish.GetDescription() + "This version is super spicy. Be careful";
+        return Dish.GetDescription() + " This version is super spicy. Be careful";
     }
     
 }
