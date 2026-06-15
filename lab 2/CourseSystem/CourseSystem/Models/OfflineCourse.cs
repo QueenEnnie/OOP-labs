@@ -1,6 +1,6 @@
 ﻿namespace CourseSystem.Models;
 
-public class OfflineCourse : Course
+public class OfflineCourse : ICourse
 {
     public OfflineCourse(int courseId, string courseTitle, List<Student> students)
     {

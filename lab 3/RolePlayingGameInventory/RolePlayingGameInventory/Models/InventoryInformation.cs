@@ -5,7 +5,7 @@ namespace RolePlayingGameInventory.Models;
 
 public class InventoryInformation
 {
-    public InventoryInformation(List<QuestItem> questItems, List<IItem> otherItems, int currentWeight, int maxWeight)
+    public InventoryInformation(IReadOnlyList<QuestItem> questItems, IReadOnlyList<IItem> otherItems, int currentWeight, int maxWeight)
     {
         QuestItems = questItems;
         OtherItems = otherItems;
@@ -13,8 +13,8 @@ public class InventoryInformation
         MaxWeight = maxWeight;
     }
     
-    public List<QuestItem> QuestItems { get; }
-    public List<IItem> OtherItems { get; }
+    public IReadOnlyList<QuestItem> QuestItems { get; }
+    public IReadOnlyList<IItem> OtherItems { get; }
     public int CurrentWeight { get; }
     public int MaxWeight { get; }
 }

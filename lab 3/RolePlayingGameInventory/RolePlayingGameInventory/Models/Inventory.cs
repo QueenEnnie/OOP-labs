@@ -22,16 +22,18 @@ public class Inventory: IInventoryAddingVisitor, IInventoryRemovingVisitor
     {
         foreach (var item in _otherItems)
         {
-            var itemToLevelUp = (ICanLevelUp)item;
-            itemToLevelUp.LevelUp();
+            if (item is ICanLevelUp itemToLevelUp)
+            {
+                itemToLevelUp.LevelUp();
+            }
         }
     }
     
     public InventoryInformation GetInformation()
     {
         return new InventoryInformation(
-            questItems: _questItems,
-            otherItems: _otherItems,
+            questItems: _questItems.ToList(),
+            otherItems: _otherItems.ToList(),
             currentWeight: _currentWeight,
             maxWeight: _maxWeight
         );

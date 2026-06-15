@@ -1,6 +1,7 @@
 ﻿using OrderSystem;
 using OrderSystem.Dishes;
 using OrderSystem.Interfaces;
+using OrderSystem.States;
 using OrderSystem.Strategies;
 
 namespace Tests
@@ -30,6 +31,38 @@ namespace Tests
             
             Assert.Contains(salad, order.Dishes);
             Assert.Equal(2, order.Dishes.Count);
+        }
+
+        [Fact]
+        public void Order_ChangeStatus_ShouldMoveThroughStatesAndFinish()
+        {
+            var order = new Order([new Pasta()], 1);
+
+            order.ChangeStatus();
+            Assert.IsType<DeliveryState>(order.OrderState);
+
+            order.ChangeStatus();
+            Assert.IsType<ReadyState>(order.OrderState);
+
+            order.ChangeStatus();
+            Assert.True(order.IsFinished);
+        }
+
+        [Fact]
+        public void Order_GetCost_ShouldUseOrdinaryStrategyByDefault()
+        {
+            var order = new Order([new Pasta()], 1);
+
+            Assert.Equal(650 * 1.13m + 300, order.GetCost());
+        }
+
+        [Fact]
+        public void System_GetCost_WithMissingOrder_ShouldThrowClearError()
+        {
+            var system = new OrderService();
+
+            var exception = Assert.Throws<KeyNotFoundException>(() => system.GetCost(999));
+            Assert.Contains("999", exception.Message);
         }
     }
 }

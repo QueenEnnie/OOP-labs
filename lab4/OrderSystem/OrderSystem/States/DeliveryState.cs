@@ -8,6 +8,6 @@ public class DeliveryState: IOrderState
 
     public void ChangeForNextState(Order order)
     {
-        order.OrderState = new ReadyState();
+        order.SetState(new ReadyState());
     }
 }

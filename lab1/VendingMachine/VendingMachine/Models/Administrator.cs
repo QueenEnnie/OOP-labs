@@ -2,7 +2,7 @@
 
 public class Administrator
 {
-    private Machine _machine;
+    private readonly Machine _machine;
     
     public Administrator(Machine machine)
     {
@@ -11,21 +11,20 @@ public class Administrator
 
     public void GetMoney()
     {
-        var money = _machine.revenue;
-        _machine.revenue = 0;
+        var money = _machine.CollectRevenue();
         Console.WriteLine($"Выручка автомата составляет {money}р.");
     }
 
     public void RefillMachine(string name, int quantity)
     {
-        _machine.Products[name].ProductQuantity += quantity;
+        _machine.RefillProduct(name, quantity);
         Console.WriteLine($"Вы пополнили {name} на {quantity} шт. " +
                           $"Текущее количество: {_machine.Products[name].ProductQuantity} шт.");
     }
 
     public void AddNewProduct(string name, int price, int quantity)
     {
-        _machine.Products[name] =  new Product(name, price, quantity);
+        _machine.AddNewProduct(name, price, quantity);
         Console.WriteLine($"Вы добавили товар {name} стоимостью {price}р в количестве {quantity} шт.");
     }
 }

@@ -58,4 +58,22 @@ public class InventoryTests
         Assert.Equal(25, weapon.Damage); 
         Assert.Equal(25, armor.Defense); 
     }
+
+    [Fact]
+    public void AddItem_OverMaxWeight_ShouldNotAddItem()
+    {
+        var inventory = new Inventory();
+        var heavyWeaponOne = new BombWeapon("Bomb 1", 1, 110, "");
+        var heavyWeaponTwo = new BombWeapon("Bomb 2", 1, 110, "");
+        var heavyWeaponThree = new BombWeapon("Bomb 3", 1, 110, "");
+
+        inventory.VisitAdd(heavyWeaponOne);
+        inventory.VisitAdd(heavyWeaponTwo);
+        inventory.VisitAdd(heavyWeaponThree);
+
+        var info = inventory.GetInformation();
+        Assert.Equal(2, info.OtherItems.Count);
+        Assert.DoesNotContain(heavyWeaponThree, info.OtherItems);
+        Assert.Equal(100, info.CurrentWeight);
+    }
 }

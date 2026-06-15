@@ -4,17 +4,17 @@ namespace OrderSystem.Strategies;
 
 public class VipPriceStrategy: ICostStrategy
 {
-    private decimal _vipCoef = 0.7m;
-    private decimal _taxesCoef = 1.1m;
+    private const decimal VipCoef = 0.7m;
+    private const decimal TaxesCoef = 1.1m;
     
     
-    public decimal DefineFinalCost(List<IDish> dishes)
+    public decimal DefineFinalCost(IEnumerable<IDish> dishes)
     {
         decimal cost = 0;
         foreach (IDish dish in dishes)
         {
             cost += dish.GetPrice();
         }
-        return cost * _taxesCoef *  _vipCoef;
+        return cost * TaxesCoef * VipCoef;
     }
 }

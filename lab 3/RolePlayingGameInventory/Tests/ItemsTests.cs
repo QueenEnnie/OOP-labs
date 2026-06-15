@@ -1,7 +1,9 @@
 ﻿using RolePlayingGameInventory.Models;
 using RolePlayingGameInventory.Models.Items;
 using RolePlayingGameInventory.Models.Items.Armour;
+using RolePlayingGameInventory.Models.Items.Potion;
 using RolePlayingGameInventory.Models.Items.Weapon;
+using RolePlayingGameInventory.Services;
 
 namespace TestProject1;
 
@@ -69,6 +71,36 @@ public class ArmorTests
         Assert.Equal(initialSpeed, player.Speed);
         Assert.Equal(10, player.OwnWeight);
     }
+
+    [Fact]
+    public void EquipmentService_ShouldNotEquipSameItemTwice()
+    {
+        var player = new Player("anka");
+        var armor = new MetalArmour("Test Armor", 1, 22, "Test armor");
+        player.Inventory.VisitAdd(armor);
+        var service = new EquipmentService(player.Inventory);
+
+        service.Equip(player, armor);
+        service.Equip(player, armor);
+
+        Assert.True(armor.IsEquipped);
+        Assert.Equal(30, player.OwnWeight);
+    }
+
+    [Fact]
+    public void EquipmentService_Unequip_ShouldResetEquippedState()
+    {
+        var player = new Player("anka");
+        var armor = new MetalArmour("Test Armor", 1, 22, "Test armor");
+        player.Inventory.VisitAdd(armor);
+        var service = new EquipmentService(player.Inventory);
+
+        service.Equip(player, armor);
+        service.Unequip(player, armor);
+
+        Assert.False(armor.IsEquipped);
+        Assert.Equal(10, player.OwnWeight);
+    }
     
     [Fact]
     public void MagicArmour_Equip_ShouldIncreasesPlayerSpeed()
@@ -102,5 +134,17 @@ public class QuestItemTests
         Assert.Equal(0, questItem.Weight);
         Assert.Equal("Ancient Key", questItem.Name);
         Assert.Equal("Opens ancient door", questItem.Description);
+    }
+}
+
+public class PotionTests
+{
+    [Fact]
+    public void HealthPotion_ShouldKeepInitialLevel()
+    {
+        var potion = new HealthPotion("Health", 3, 20, "restores health");
+
+        Assert.Equal(3, potion.Level);
+        Assert.Equal(0, potion.Weight);
     }
 }

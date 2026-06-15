@@ -1,6 +1,6 @@
 ﻿namespace CourseSystem.Models;
 
-public class OnlineCourse : Course
+public class OnlineCourse : ICourse
 {
     public OnlineCourse(int courseId,  string courseTitle, List<Student> students)
     {
@@ -19,7 +19,6 @@ public class OnlineCourse : Course
     public void AppointTeacher(int teacherId)
     {
         TeacherId = teacherId;
-        Console.WriteLine($"Teacher ID: {TeacherId}");
     }
 
     public override string ToString()

@@ -20,7 +20,7 @@ namespace OrderSystem
             menu.Display();
             
             IDish spicyPasta = new ExtraSpicy(pasta);
-            System system = new System();
+            OrderService system = new OrderService();
             FastOrderFactory factory = new FastOrderFactory();
             
             int orderId = system.CreateOrder(dishes, factory);

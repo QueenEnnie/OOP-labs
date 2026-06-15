@@ -2,5 +2,5 @@
 
 public interface ICostStrategy
 {
-    decimal DefineFinalCost(List<IDish> dishes);
+    decimal DefineFinalCost(IEnumerable<IDish> dishes);
 }

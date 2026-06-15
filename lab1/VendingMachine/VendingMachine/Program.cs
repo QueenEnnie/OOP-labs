@@ -4,7 +4,7 @@ namespace VendingMachine
 {
     class Program
     {
-        private static Machine machine;
+        private static Machine machine = null!;
         private static int availableMoney = 0;
         static void ShowWelcomeMessage()
         {
@@ -18,7 +18,7 @@ namespace VendingMachine
             Console.WriteLine("");
         }
 
-        static bool ValidateCoins(string input)
+        static bool ValidateCoins(string? input)
         {
             int[] nominal = [1, 2, 5, 10, 50, 100];
             if (string.IsNullOrWhiteSpace(input)) return false;
@@ -34,36 +34,33 @@ namespace VendingMachine
         {                       
             Console.WriteLine("Чтобы вставить монеты, введите их номинал в строку через пробел " +
                                                   "(вы можете использовать только номиналы 1, 2, 5, 10, 50, 100):");
-            string input = Console.ReadLine();
+            string? input = Console.ReadLine();
             while (!ValidateCoins(input))
             {
                 Console.WriteLine("Пожалуйста, введите корректные данные!");
                 input = Console.ReadLine();
             }
-            return input.Split(' ').Select(int.Parse).Sum();
+            return input!.Split(' ').Select(int.Parse).Sum();
         }
 
         static void ChooseProduct(int money)
         {
             Console.WriteLine("Напишите название товара, который хотите выбрать:");
-            string input = Console.ReadLine();
-            while (!machine.Products.ContainsKey(input))
+            string? input = Console.ReadLine();
+            while (input is null || !machine.Products.ContainsKey(input))
             {
                 Console.WriteLine("Такого продукта не существует!");
                 input = Console.ReadLine();
             }
 
-            if (money >= machine.Products[input].ProductPrice)
+            if (machine.TrySellProduct(input, money, out var change, out var message))
             {
-                machine.SellProduct(input);
-                
-                Console.WriteLine($"Покупка успешно завершена! " +
-                                  $"Ваша сдача: {availableMoney - machine.Products[input].ProductPrice}р");
+                Console.WriteLine($"{message} Ваша сдача: {change}р");
                 availableMoney = 0;
             }
             else
             {
-                Console.WriteLine("Денег недостаточно, повторите операцию вставки монет или отмените покупку!");
+                Console.WriteLine(message);
                 Console.WriteLine("Для отмены введите STOP.");
             }
         }
@@ -83,7 +80,7 @@ namespace VendingMachine
             try
             {
                 Console.WriteLine("Введите название товара, который хотите пополнить и количество, которое хотитите добавить через пробел:");
-                string input = Console.ReadLine();
+                string? input = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(input))
                 {
                     Console.WriteLine("Некорректные данные! Пожалуйста, повторите операцию с правильным вводом!");
@@ -102,7 +99,7 @@ namespace VendingMachine
                     return;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine($"Произошла ошибка! Пожалуйства, повторите операцию, перечитав условия пользования!");
             }
@@ -114,7 +111,7 @@ namespace VendingMachine
             {
                 Console.WriteLine(
                     "Введите название товара, который хотите добавить, его цену и количество через пробел:");
-                string input = Console.ReadLine();
+                string? input = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(input))
                 {
                     Console.WriteLine("Некорректные данные! Пожалуйста, повторите операцию с правильным вводом!");
@@ -127,7 +124,7 @@ namespace VendingMachine
 
                 administrator.AddNewProduct(name, price, quantity);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine($"Произошла ошибка! Пожалуйства, повторите операцию, перечитав условия пользования!");
             }
@@ -136,10 +133,10 @@ namespace VendingMachine
         {
             var currentAdministrator = new Administrator(machine);
             ShowAdministratorMessage();
-            string input = Console.ReadLine();
-            while (input.ToUpperInvariant() != "EXIT")
+            string? input = Console.ReadLine();
+            while (input?.ToUpperInvariant() != "EXIT")
             {
-                switch (input.ToUpperInvariant())
+                switch (input?.ToUpperInvariant())
                 {
                     case "N": AddProduct(currentAdministrator); break;   
                     case "R": RefillProducts(currentAdministrator); break;

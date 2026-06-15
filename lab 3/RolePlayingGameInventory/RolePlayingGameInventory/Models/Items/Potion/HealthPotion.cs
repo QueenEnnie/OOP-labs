@@ -14,7 +14,7 @@ public class HealthPotion : IPotion
     {
         Health = health;
         Name = name;
-        Weight = level;
+        Level = level;
         Description = description;
     }
 

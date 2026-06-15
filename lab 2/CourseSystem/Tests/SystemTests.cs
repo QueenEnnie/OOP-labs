@@ -16,6 +16,23 @@ public class SystemTests
         Assert.Single(courses);
         Assert.Contains("\"C++\" (id 101) онлайн", courses);
     }
+
+    [Fact]
+    public void AddCourse_WithInvalidType_ShouldThrow()
+    {
+        var system = new ManagementSystem();
+
+        Assert.Throws<ArgumentException>(() => system.AddCourse(101, "C++", "unknown", []));
+    }
+
+    [Fact]
+    public void AddCourse_WithDuplicateId_ShouldThrow()
+    {
+        var system = new ManagementSystem();
+        system.AddCourse(101, "C++", CourseKind.Online, []);
+
+        Assert.Throws<ArgumentException>(() => system.AddCourse(101, "C#", CourseKind.Offline, []));
+    }
     
     [Fact]
     public void AddTeacher_ShouldAddToSystem()
@@ -67,6 +84,15 @@ public class SystemTests
 
         var teacherCourses = system.GetAllTeacherCourses(4);
         Assert.Contains("\"Spanish\" (id 18) оффлайн", teacherCourses);
+    }
+
+    [Fact]
+    public void AppointTeacher_WithMissingTeacher_ShouldThrow()
+    {
+        var system = new ManagementSystem();
+        system.AddCourse(18, "Spanish", CourseKind.Offline, []);
+
+        Assert.Throws<KeyNotFoundException>(() => system.AppointTeacher(4, 18));
     }
     
     [Fact]

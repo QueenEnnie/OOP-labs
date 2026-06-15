@@ -4,11 +4,11 @@ namespace OrderSystem;
 
 public class Menu
 {
-    public List<IDish> Dishes;
+    public IReadOnlyList<IDish> Dishes { get; }
 
-    public Menu(List<IDish> dishes)
+    public Menu(IEnumerable<IDish> dishes)
     {
-        Dishes = dishes;
+        Dishes = dishes.ToList();
     }
 
     public void Display()

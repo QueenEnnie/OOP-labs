@@ -5,7 +5,7 @@ namespace RolePlayingGameInventory.Services;
 
 public class EquipmentService
 {
-    private Inventory _inventory;
+    private readonly Inventory _inventory;
 
     public EquipmentService(Inventory inventory)
     {
@@ -13,7 +13,7 @@ public class EquipmentService
     }
     public void Equip(Player player, IEquipable item)
     {
-        if (_inventory.ContainsEquipableItem(item))
+        if (_inventory.ContainsEquipableItem(item) && !item.IsEquipped)
         {
             item.Equip(player);
             item.IsEquipped = true;
@@ -25,6 +25,7 @@ public class EquipmentService
         if (item.IsEquipped)
         {
             item.Unequip(player);
+            item.IsEquipped = false;
         }
     }
 }

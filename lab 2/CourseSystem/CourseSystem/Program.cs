@@ -36,7 +36,7 @@ namespace CourseSystem
 
             static int GetId()
             {
-                string input = Console.ReadLine();
+                string? input = Console.ReadLine();
                 int id;
                 while (!int.TryParse(input, out id))
                 {
@@ -60,7 +60,7 @@ namespace CourseSystem
             static string GetTitle()
             {
                 Console.WriteLine(ConsoleMessages.ManageCourseMenu.TitleInput);
-                string courseTitle = Console.ReadLine();
+                string? courseTitle = Console.ReadLine();
                 while (string.IsNullOrWhiteSpace(courseTitle))
                 {
                     Console.WriteLine(ConsoleMessages.ManageCourseMenu.EmptyTitle);
@@ -72,7 +72,7 @@ namespace CourseSystem
             static string GetCourseType()
             {
                 Console.WriteLine(ConsoleMessages.ManageCourseMenu.TypeOfCourseChoice);
-                string courseType = Console.ReadLine();
+                string? courseType = Console.ReadLine();
                 while (!(courseType == "1" || courseType == "2"))
                 {
                     Console.WriteLine(ConsoleMessages.ManageCourseMenu.IncorrectTypeChoice);

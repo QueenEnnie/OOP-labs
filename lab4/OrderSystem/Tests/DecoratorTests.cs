@@ -25,5 +25,14 @@ namespace Tests
             
             Assert.Equal(pasta.GetPrice(), price);
         }
+
+        [Fact]
+        public void ThickDough_ShouldIncreasePrice()
+        {
+            IDish pasta = new Pasta();
+            IDish thickPasta = new ThickDough(pasta);
+
+            Assert.Equal(975, thickPasta.GetPrice());
+        }
     }
 }
